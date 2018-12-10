@@ -6,10 +6,15 @@ import { Image } from 'react-native-animatable';
 import {Badge,Text,Icon} from 'native-base';
 const WIDTH = Dimensions.get('window').width;
 export default class GalleryImage extends Component {
+
+  constructor(props) {
+    super(props);
+   
+  }
+
   render() {
     const { uri, index, onPress,selected } = this.props;
     const setBtnStyle=(index)=>{
-        console.log("setBtnStyle");
         let spaceBetween = 10;
         let boxWidth =  WIDTH / 2 - (spaceBetween/2) - 6;
 

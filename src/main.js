@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { Dispatcher } from 'flux';
 import { StyleSheet, View, Text } from 'react-native';
-import { Container, Content, Header, Body, Title, Button } from 'native-base';
+import { Container, Content, Header, Body, Title, Button, Item } from 'native-base';
 import Gallery from './components/Gallery';
 import PropTypes from 'prop-types';
-
-const dispatcher = new Dispatcher();
 
 export default class Main extends Component {
 
 
     constructor(props) {
         super(props);
+        this.handler = this.handler.bind(this);
         this.state = {
+            loading: true,
             images: [
                 { uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThNCs2l1aPPfKQjZ7ejGacZwzgfZWBPQjY7lbkCrjEfVVHMTLI', description: "teste1" },
                 { uri: 'https://help.sitebeam.net/app/uploads/2012/07/test_urlformat.png', description: "teste2" },
@@ -22,8 +21,32 @@ export default class Main extends Component {
                 { uri: 'https://i.ytimg.com/vi/jMgvnXq-s8o/maxresdefault.jpg', description: "teste6" }
             ]
         };
+
+
+        setTimeout(() => {
+            console.log("TIMEOUUUUT");
+            this.setState({ loading: false })
+        }, 100);
+
+
     }
 
+
+
+    handler(listImages) {
+        var images = this.state.images;
+        listImages.forEach((element, index) => {
+            images.filter((item, index) => {
+                console.log(item, element, "iteme");
+                if (item.uri == element.url){
+                    console.log("ENTROUIFFFF");
+                    return images[index].description = element.description;
+                }
+            })
+        });
+
+        this.setState({ images: images});
+    }
 
     render() {
         return (
@@ -34,9 +57,11 @@ export default class Main extends Component {
                     </Body>
                 </Header>
                 <Content>
-                    <Gallery
+                    {!this.state.loading ? <Gallery
                         images={this.state.images}
-                        selectionMode={false}></Gallery>
+                        handler={this.handler}
+                        selectionMode={false}></Gallery> : null}
+
                     <Button block onPress={() => console.log(this.state.images)}>
                         <Text>Lista de imagens</Text>
                     </Button>

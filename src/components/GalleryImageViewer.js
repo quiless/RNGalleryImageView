@@ -21,7 +21,6 @@ import { Textarea, Content, Form } from 'native-base';
 /**
  * the width & height of screen
  */
-const dispatcher = new Dispatcher();
 const { width, height } = Dimensions.get('window');
 
 const screenWidth = width;
@@ -33,6 +32,7 @@ const screenHeight = height;
 export default class GalleryImageViewer extends Component {
 
     constructor(props) {
+        console.log(props, "GALEIMAGEVIE");
         super(props);
         this.state = {
             curIndex: 0,
@@ -413,6 +413,7 @@ export default class GalleryImageViewer extends Component {
                 loadImgSuccess: false
             });
             this.props.onClose();
+            this.props.handler(this.state.imagesInfo);
         });
     }
 
@@ -449,9 +450,7 @@ export default class GalleryImageViewer extends Component {
                         var itens = this.state.imagesInfo;
                         itens[this.state.curIndex].description = curDescription;
                         this.setState({ curDescription: curDescription, imagesInfo: itens, auxList: itens });
-                        this.props.handler;
-                        console.log(this.state);
-                        //
+                        this.props.handler(itens);
                     }}
                         style={{
                             borderColor: '#FFF',
@@ -666,7 +665,6 @@ export default class GalleryImageViewer extends Component {
      */
 
     next(curIndex) {
-        console.log(this.state, "STNEXT");
         let url = this.props.imageUrls[curIndex + 1].uri;
 
         if (url) {
@@ -679,7 +677,7 @@ export default class GalleryImageViewer extends Component {
                 curDescription: this.state.imagesInfo[curIndex + 1].description,
             }, this.callback)
         }
-
+        
     }
 
     /**
@@ -687,7 +685,7 @@ export default class GalleryImageViewer extends Component {
      * @param curIndex  current index of image's url in imageUrls
      */
     prev(curIndex) {
-        console.log(this.state, "STPREV");
+
         let url = this.props.imageUrls[curIndex - 1].uri;
 
         if (url) {
@@ -701,6 +699,8 @@ export default class GalleryImageViewer extends Component {
             }, this.callback)
 
         }
+
+        
     }
 
     /**

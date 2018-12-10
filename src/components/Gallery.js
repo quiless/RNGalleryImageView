@@ -7,6 +7,7 @@ import GalleryImage from './GalleryImage';
 
 export default class Gallery extends Component {
   constructor(props) {
+    console.log(props, "GALAS");
     super(props);
     this.state = {
         index: 0,
@@ -78,7 +79,8 @@ export default class Gallery extends Component {
         }): null)}
 
         <GalleryImageViewer          
-          shown={this.state.shown}          
+          shown={this.state.shown}      
+          handler={this.props.handler}    
           imageUrls={this.state.imagesUrl}          
           onClose={this.hideLightbox}
           index={this.state.index}   
